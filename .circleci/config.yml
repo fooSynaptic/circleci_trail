@@ -1,8 +1,38 @@
-  version: 2.1
-  jobs:
-    build:
-      docker: 
-        - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
-      steps:
-        - checkout # check out the code in the project directory
-        - run: echo "hello world" # run the `echo` command
+version: 2.1
+
+# Define jobs for the workflow
+jobs:
+  build:
+    docker:
+      # Specify the Docker image to use for this job
+      - image: cimg/node:16.14.0
+        
+    # Define steps to execute in this job
+    steps:
+      # Checkout the repository code
+      - checkout
+      
+      # Display a greeting message
+      - run:
+          name: "Say Hello"
+          command: echo "Hello, World! CircleCI is working!"
+      
+      # Display environment information
+      - run:
+          name: "Environment Information"
+          command: |
+            echo "Node version:"
+            node --version
+            echo "NPM version:"
+            npm --version
+            echo "Current directory:"
+            pwd
+            echo "Directory contents:"
+            ls -la
+
+# Define the workflow
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
